@@ -4,38 +4,38 @@ import { basicSchema } from '../schemas';
 
 
 
-const onSubmit = async (values,actions)=>{
-  console.log(values);
-  console.log(actions);
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  actions.resetForm();
-    
-}
-
-const [email, setEmail] = useState("")
-
-const sendEmail = async(e) =>{
-   e.preventDefault() ;
-   const res = await fetch ("/register", {
-    method : "POST",
-    headers: {
-        "Content-Type" :"application/json"
-    }, body:JSON.stringify({
-        email
-    })
-   });
-    const data = await res.json();
-    if(data.status === 401 || !data){
-        console.log("error")
-    } else{
-        console.log("Email sent ")
-        setEmail("")
-    }
-}
-
 
 const BasicForm = () => {
 
+    const [email, setEmail] = useState("")
+
+    const onSubmit = async (values,actions)=>{
+        console.log(values);
+        console.log(actions);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        actions.resetForm();
+
+    }
+
+
+    const sendEmail = async(e) =>{
+        e.preventDefault() ;
+        const res = await fetch ("/register", {
+            method : "POST",
+            headers: {
+                "Content-Type" :"application/json"
+            }, body:JSON.stringify({
+                email
+            })
+        });
+        const data = await res.json();
+        if(data.status === 401 || !data){
+            console.log("error")
+        } else{
+            console.log("Email sent ")
+            setEmail("")
+        }
+    }
     
     const {values,errors,touched,isSubmitting, handleBlur,handleChange, handleSubmit}= useFormik({
         initialValues :{
