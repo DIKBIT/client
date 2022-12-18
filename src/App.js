@@ -8,7 +8,11 @@ function App() {
 
   return (
     <div className="App">
-    <nav>
+
+    <h2>Cryptocurrency Stats </h2>
+
+    <BasicForm/>
+    {/* <nav>
       <h3 onClick={()=> setView("basic")}
       style={{color : view=== "basic" ? "#fff" : ""}}>
       Basic
@@ -20,7 +24,7 @@ function App() {
 
       </h3>
     </nav>
-    {view === "basic" ? <BasicForm/> : <AdvancedForm/>}
+    {view === "basic" ? <BasicForm/> : <AdvancedForm/>} */}
       
     </div>
   );

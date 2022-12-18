@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {useFormik} from "formik";
 import { basicSchema } from '../schemas';
+
+
 
 const onSubmit = async (values,actions)=>{
   console.log(values);
@@ -10,8 +12,31 @@ const onSubmit = async (values,actions)=>{
     
 }
 
+const [email, setEmail] = useState("")
+
+const sendEmail = async(e) =>{
+   e.preventDefault() ;
+   const res = await fetch ("/register", {
+    method : "POST",
+    headers: {
+        "Content-Type" :"application/json"
+    }, body:JSON.stringify({
+        email
+    })
+   });
+    const data = await res.json();
+    if(data.status === 401 || !data){
+        console.log("error")
+    } else{
+        console.log("Email sent ")
+        setEmail("")
+    }
+}
+
 
 const BasicForm = () => {
+
+    
     const {values,errors,touched,isSubmitting, handleBlur,handleChange, handleSubmit}= useFormik({
         initialValues :{
             email:"",
@@ -62,7 +87,7 @@ const BasicForm = () => {
         id ="confirmPassword" type="password" placeholder =" Confirm Your Password"></input>
         {errors.confirmPassword && touched.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
 
-        <button disabled={isSubmitting} type='submit'>Submit</button>
+        <button disabled={isSubmitting} type='submit' onClick={sendEmail}>Submit</button>
 
         
 
